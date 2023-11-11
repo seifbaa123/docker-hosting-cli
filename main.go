@@ -40,7 +40,16 @@ func main() {
 		},
 	}
 
-	app.Commands = []cli.Command{create, update}
-	app.Run(os.Args)
+	delete := cli.Command{
+		Name:    "delete",
+		Aliases: []string{},
+		Usage:   "Delete the project",
+		Action: func(c *cli.Context) error {
+			subcommands.Delete()
+			return nil
+		},
+	}
 
+	app.Commands = []cli.Command{create, update, delete}
+	app.Run(os.Args)
 }

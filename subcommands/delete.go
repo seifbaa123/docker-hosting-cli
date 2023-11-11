@@ -1,7 +1,6 @@
 package subcommands
 
 import (
-	"docker-hosting-cli/utils"
 	"fmt"
 	"io"
 	"log"
@@ -11,7 +10,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func Update() {
+func Delete() {
 	yamlFile, err := os.ReadFile(configFile)
 	if err != nil {
 		log.Fatalf("Error reading YAML file: %v", err)
@@ -25,18 +24,15 @@ func Update() {
 
 	url := fmt.Sprintf("%s/api/images/%d", apiUrl, config.Id)
 
-	multipartWriter, requestBody := utils.CreateFormData(config.Name)
-	req, err := http.NewRequest("PUT", url, &requestBody)
+	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
-		log.Fatal("Error creating PUT request:", err)
+		log.Fatal("Error creating DELETE request:", err)
 	}
-
-	req.Header.Set("Content-Type", multipartWriter.FormDataContentType())
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal("Error sending PUT request:", err)
+		log.Fatal("Error sending DELETE request:", err)
 	}
 	defer resp.Body.Close()
 
@@ -47,6 +43,11 @@ func Update() {
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal("Error reading response body:", err)
+	}
+
+	err = os.Remove(configFile)
+	if err != nil {
+		log.Fatal("Error deleting config file:", err)
 	}
 
 	fmt.Println(string(body))

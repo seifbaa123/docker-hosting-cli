@@ -11,15 +11,6 @@ import (
 	"strings"
 )
 
-type Response struct {
-	Message string `json:"message"`
-	Image   struct {
-		Id       int    `json:"id"`
-		Name     string `json:"name"`
-		HasBuild bool   `json:"hasBuild"`
-	} `json:"image"`
-}
-
 func Create(projectName string) {
 	url := fmt.Sprintf("%s/api/images", apiUrl)
 
