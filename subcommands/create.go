@@ -21,8 +21,10 @@ type Response struct {
 }
 
 func Create(projectName string) {
+	url := fmt.Sprintf("%s/api/images", apiUrl)
+
 	multipartWriter, requestBody := utils.CreateFormData(projectName)
-	req, err := http.NewRequest("POST", apiUrl, &requestBody)
+	req, err := http.NewRequest("POST", url, &requestBody)
 	if err != nil {
 		log.Fatal("Error creating POST request:", err)
 	}

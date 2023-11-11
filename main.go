@@ -12,7 +12,7 @@ func main() {
 	app.Name = "dh-cli"
 	app.Usage = "CLI tool for docker-hosting website"
 
-	config := cli.Command{
+	create := cli.Command{
 		Name:    "create",
 		Aliases: []string{},
 		Usage:   "Create a new project",
@@ -30,7 +30,17 @@ func main() {
 		},
 	}
 
-	app.Commands = []cli.Command{config}
+	update := cli.Command{
+		Name:    "update",
+		Aliases: []string{},
+		Usage:   "Update the project",
+		Action: func(c *cli.Context) error {
+			subcommands.Update()
+			return nil
+		},
+	}
+
+	app.Commands = []cli.Command{create, update}
 	app.Run(os.Args)
 
 }
