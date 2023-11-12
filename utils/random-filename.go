@@ -10,7 +10,6 @@ const filenameLength = 16
 
 var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-// GenerateRandomFilename generates a random filename with the given length.
 func GenerateRandomFilename() string {
 	b := make([]byte, filenameLength)
 	for i := range b {

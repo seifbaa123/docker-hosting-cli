@@ -1,9 +1,6 @@
-package subcommands
+package types
 
-const apiUrl = "http://localhost:5173"
-const configFile = "dh-config.yml"
-
-type Config struct {
+type ProjectConfig struct {
 	Id   int    `yaml:"id"`
 	Name string `yaml:"name"`
 }
